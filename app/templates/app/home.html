@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>スクレイピング実行</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stylesheet.css' %}">
+</head>
+<body>
+  <div class = "header">
+    <div class = "header-logo">スクレイピング実行ツール</div>
+  </div>
+  <div class = "mein">
+    <div class="copy-container">
+      <h1>楽天サイトから商品情報をスクレイピングできます</h1>
+    </div>
+    <div class = "button-form">
+        <!-- フォームのaction属性に関数が実行されるURLまたはエンドポイントを指定 -->
+        <form id="myForm" action="{% url 'app:home' %}" method="post">
+            {% csrf_token %}
+            <label for="name">商品検索:</label>
+            <input type="text" id="name" name="name">
+        <!-- ボタンをフォームのサブミットボタンとして定義 -->
+            <button class = "button" type="submit">スクレイピングを実行する</button>
+        </form>
+    </div>
+</body>
+</html>

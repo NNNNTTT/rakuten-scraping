@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>スクレイピング実行</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/stylesheet.css' %}">
+    </head>
+    <body>
+        <div class = "header">
+            <div class = "header-logo">スクレイピング実行ツール</div>
+        </div>
+        <div class = "message">{{ message }}</div>
+        <div class = "data">{{ data|safe }}</div>    
+    </body>
+</html>
