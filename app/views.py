@@ -5,6 +5,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from time import sleep
 import os
+from django.http import JsonResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def scraping_code(name):
@@ -40,16 +43,15 @@ def scraping_code(name):
 class HomeView(View):
     def get(self,request):
         context = {"message":"hello world"}
+        print("エラー")
         return render(request, "app/home.html", context)
     
     def post(self, request):
+        print(request.POST.get('name'))
         search_name = request.POST.get("name")
-        print(search_name)
         df = scraping_code(search_name)
         data = df.to_html(index=False)
-        message = "下記にスクレイピング結果が表示されます。"
-        context = {"data":data,}
-        return render(request, "app/result.html", context)
+        return JsonResponse({"data":data})
 
     
 home = HomeView.as_view()
