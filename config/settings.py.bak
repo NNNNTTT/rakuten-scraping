@@ -30,7 +30,6 @@ ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost:8001","https://*.rakuten-scraping.ars-system.net"]
 
 
-
 # Application definition
 
 INSTALLED_APPS = [

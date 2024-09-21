@@ -4,10 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from time import sleep
-import os
 from django.http import JsonResponse
-import json
-from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def scraping_code(name):
@@ -25,7 +22,7 @@ def scraping_code(name):
     soup = BeautifulSoup(r.text,features='lxml')
     sleep(1)
     contents = soup.find_all('div',class_='dui-card searchresultitem overlay-control-wrapper--2W6PV title-control-wrapper--1YBX9')
-    for content in contents[:5]:
+    for content in contents[:20]:
         item_title = content.find('div',class_='title--I67Sk title--zfJkV title-grid--XKKDL')
         item_price = content.find('div',class_='price-wrapper--F8UPj')
 
@@ -43,7 +40,6 @@ def scraping_code(name):
 class HomeView(View):
     def get(self,request):
         context = {"message":"hello world"}
-        print("エラー")
         return render(request, "app/home.html", context)
     
     def post(self, request):

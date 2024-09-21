@@ -6,28 +6,19 @@ form, input, div, table{
   padding: 0;
 }
 
-body {
+.body {
     font-family: "Avenir Next", "Hiragino Kaku Gothic ProN W3", sans-serif;
-  }
-
-.header {
-    background-color:rgb(249, 112, 112);
-    height: 90px;
-    color:rgb(250, 250, 250);
-  }
-
-  .header-logo {
-    float:left;
-    font-size:36px;
-    padding: 20px 40px;
+    background-color: rgb(238, 236, 236);
   }
 
   .copy-container {
     padding:20px 40px;
+    background-color: white;
+    margin: 100px; /* 上下左右に20pxの余白 */
   }
 
   .copy-container h1 {
-    font-size:40px;
+    font-size:30px;
   }
 
   .button-form {
@@ -67,6 +58,8 @@ body {
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;
+  text-align: center;
+  margin: 0 auto;
 }
 
 @keyframes spin {
@@ -76,4 +69,29 @@ body {
 
 .my-custom-table th, .my-custom-table td {
   text-align: center; /* 文字を中央揃え */
+  padding: 100px 100px;
+}
+
+.h1 {
+  text-align: center;
+}
+
+.meal-table {
+  overflow: auto; /* スクロールを自動にする */
+  width: 100%; /* 幅を100%にして、親要素に合わせる */
+  max-width: 1500px; /* 最大幅を指定する */
+  height: 70vh; /* 高さをビューポートの70%にする */
+  padding: 5px;
+  box-sizing: border-box;
+  border: 1px solid lightgray; /* 枠線を追加 */
+  margin: 0 auto;
+  display: none;
+}
+
+.class-1 {
+  width: 80%;
+}
+
+.class-2 {
+  width: 20%;
 }

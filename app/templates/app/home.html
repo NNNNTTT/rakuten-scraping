@@ -2,35 +2,37 @@
 {% load static %}
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">  
+    <meta charset="UTF-8"> 
     <title>スクレイピング実行</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/stylesheet.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<body>
-  <div class = "header">
-    <div class = "header-logo">スクレイピング実行ツール</div>
-  </div>
+<body class="body">
   <div class = "mein">
     <div class="copy-container">
-      <h1>楽天サイトから商品情報をスクレイピングできます</h1>
-      <div class = "button-form row mb-3">
+      <h1 class="h1">楽天サイトから商品情報をスクレイピングできます</h1>
+      <div class = "button-form row mb-3 justify-content-center">
               <div class="col-sm-5">
+                {% csrf_token %}
                 <input type="text" id="name" name="name" class="form-control border-secondary fs-3" placeholder="商品検索">
               </div>
-              <button id="button" class="col-sm-2 btn btn-secondary fs-5" >スクレイピングを実行する</button>
+              <button id="button" class="col-sm-3 btn btn-secondary fs-5" >スクレイピングを開始する</button>
       </div>
       <div id="loading"></div>
-      <table class="table table-bordered table-striped border-secondary my-custom-table" id="d"></table>
+      <div class="meal-table" id="meal-table">
+        <table class="table table-bordered table-striped border-secondary my-custom-table" id="table"></table>
+        <button class="btn btn-secondary fs-5" onclick="downloadCSV()">CSVファイルをダウンロード</button>
+      </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="{% static 'js/app.js' %}"></script>
     <script>
     $(document).ready(function() {
     $("#button").click(function() {
         var inputValue = $("#name").val();
         console.log(inputValue);
+        var csrftoken = getCookie('csrftoken');
+        console.log(csrftoken);
 
         // ローディング開始
         $("#loading").show();
@@ -38,21 +40,26 @@
         $.ajax({
             type: "POST",
             url: "{% url 'app:home'%}" ,
+            headers: {
+                'X-CSRFToken': csrftoken // ここでCSRFトークンを指定
+            },
             data: {
-              'csrfmiddlewaretoken': csrftoken,
               'name': inputValue
             },
             dataType : 'json',
             success: function(response) {
-              // サーバーからのレスポンスを処理
-              $("#d").html(response.data);
+              $("#table").html(response.data);
             },
             error: function(xhr, status, error) {
                 alert('エラーが発生しました: ' + error);
             },
-            complete: function() {
-                // 常に最後に実行される
+            complete: function() {                
                 $("#loading").hide();
+            const ths = document.getElementsByTagName('th');
+            for (let i = 0; i < ths.length; i++) {
+                ths[i].classList.add(`class-${i + 1}`);
+            $("#meal-table").show();
+            }
             }
           });
         });
